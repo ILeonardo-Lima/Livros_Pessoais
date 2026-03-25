@@ -102,7 +102,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <nav className="bg-indigo-700 text-white py-5 shadow-lg">
+      <nav className="bg-black text-white py-5 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold">📚 Minha Biblioteca</h1>
           <button
