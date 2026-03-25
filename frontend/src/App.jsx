@@ -34,7 +34,7 @@ function App() {
   useEffect(() => {
     const fetchLivros = async () => {
       try {
-        const response = await api.get("/livros");
+        const response = await api.get("/api/livros");
         setLivros(response.data); // This is now handled after the promise resolves
       } catch (error) {
         console.error("Erro ao carregar livros:", error);
@@ -72,7 +72,16 @@ function App() {
   };
 
   const editar = (livro) => {
-    setForm(livro);
+    setForm({
+      titulo: livro.titulo || "",
+      autor: livro.autor || "",
+      ano: livro.ano || "",
+      genero: livro.genero || "",
+      paginas: livro.paginas || "",
+      status: livro.status || "Não lido",
+      capaUrl: livro.capaurl || livro.capaUrl || "", // Tenta os dois nomes
+      isbn: livro.isbn || "",
+    });
     setEditingId(livro.id);
     setModalOpen(true);
   };
@@ -120,11 +129,11 @@ function App() {
               key={livro.id}
               className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all"
             >
-              {livro.capaUrl ? (
+              {livro.capaurl ? (
                 <img
-                  src={livro.capaUrl}
+                  src={livro.capaurl}
                   alt="capa"
-                  className="w-full h-56 object-cover"
+                  className="w-full h-56 object-contain"
                 />
               ) : (
                 <div className="h-56 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-6xl">
