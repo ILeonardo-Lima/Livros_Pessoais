@@ -79,7 +79,7 @@ function App() {
       genero: livro.genero || "",
       paginas: livro.paginas || "",
       status: livro.status || "Não lido",
-      capaUrl: livro.capaurl || livro.capaUrl || "", // Tenta os dois nomes
+      capaUrl: livro.capaurl || livro.capaUrl || "",
       isbn: livro.isbn || "",
     });
     setEditingId(livro.id);
@@ -156,7 +156,7 @@ function App() {
                     className={
                       livro.status === "Lido"
                         ? "text-green-600"
-                        : "text-orange-600"
+                        : "text-red-600"
                     }
                   >
                     {livro.status}
@@ -260,7 +260,7 @@ function App() {
                     setModalOpen(false);
                     setEditingId(null);
                   }}
-                  className="flex-1 py-3 text-gray-600 font-semibold"
+                  className="flex-1 bg-rose-500 text-white py-3  rounded-2xl font-semibold hover:bg-rose-800 "
                 >
                   Cancelar
                 </button>
