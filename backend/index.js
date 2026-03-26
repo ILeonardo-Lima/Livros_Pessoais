@@ -31,7 +31,7 @@ pool
 app.get("/api/livros", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM livros ORDER BY createdat DESC",
+      "SELECT * FROM livros ORDER BY posicao ASC, id DESC",
     );
     res.json(result.rows);
   } catch (error) {
@@ -39,6 +39,28 @@ app.get("/api/livros", async (req, res) => {
     res
       .status(500)
       .json({ error: "Erro ao buscar livros", details: error.message });
+  }
+});
+
+// Rota para salvar a nova ordenação
+app.put("/api/livros/reordenar", async (req, res) => {
+  const { livros } = req.body; // Recebe o array ordenado do frontend
+
+  try {
+    // Usamos uma Promise.all para garantir que todos os updates terminem
+    await Promise.all(
+      livros.map((livro, index) => {
+        return pool.query("UPDATE livros SET posicao = $1 WHERE id = $2", [
+          index,
+          livro.id,
+        ]);
+      }),
+    );
+
+    res.status(200).json({ message: "Ordem atualizada com sucesso!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao salvar ordenação" });
   }
 });
 
