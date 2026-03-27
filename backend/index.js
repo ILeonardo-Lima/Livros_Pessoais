@@ -1,15 +1,12 @@
 const express = require("express");
 const { Pool } = require("pg");
-const cors = require("cors");
+const cors = require("cors"); // Apenas uma vez!
 const dotenv = require("dotenv");
-const cors = require("cors");
-app.use(cors());
 
 dotenv.config();
 
-const app = express();
-const port = process.env.PORT || 3001;
-
+const app = express(); // Primeiro cria o app...
+app.use(cors()); // ...depois aplica o cors!
 app.use(express.json());
 
 // Conexão com o banco
