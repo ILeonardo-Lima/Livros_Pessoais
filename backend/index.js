@@ -107,7 +107,13 @@ app.delete("/api/livros/:id", async (req, res) => {
   }
 });
 
-module.exports = app(port, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${port}`);
-  console.log(`📚 Teste a API: http://localhost:${port}/api/livros`);
-});
+// CORREÇÃO FINAL: Exportar para Vercel e porta para local
+const port = process.env.PORT || 3001;
+
+if (process.env.NODE_ENV !== "production") {
+  app.listen(port, () => {
+    console.log(`🚀 Servidor rodando em http://localhost:${port}`);
+  });
+}
+
+module.exports = app;
