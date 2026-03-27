@@ -6,7 +6,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { Moon, Sun, Plus, Trash2, Edit3, BookOpen, Search } from "lucide-react";
 
 const api = axios.create({
-  baseURL: "https://livros-pessoal-api.vercel.app",
+  // Use exatamente o link que funcionou no seu navegador
+  baseURL: "https://livros-pessoais-api.vercel.app",
 });
 const ItemType = "LIVRO";
 
