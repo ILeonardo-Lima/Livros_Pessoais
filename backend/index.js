@@ -21,7 +21,9 @@ pool
   .catch((err) => console.error("❌ Erro ao conectar::", err.message));
 
 // ====================== ROTAS ======================
-
+app.get("/", (req, res) => {
+  res.send("O servidor backend está funcionando!");
+});
 // Listar todos os livros
 app.get("/api/livros", async (req, res) => {
   try {
