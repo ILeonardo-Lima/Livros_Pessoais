@@ -2,7 +2,9 @@ const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const API_URL = "https://livros-pessoais.vercel.app/api";
+const response = await fetch(
+  "https://livros-pessoal-api.vercel.app/api/livros",
+);
 
 dotenv.config();
 
