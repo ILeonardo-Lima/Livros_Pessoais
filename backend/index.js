@@ -2,34 +2,37 @@ const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const API_URL = "https://livros-pessoais.vercel.app/api";
 
 dotenv.config();
 
-const app = express(); // 1º: Cria o app
-const port = process.env.PORT || 3001; // <--- ADICIONE ESTA LINHA!
-app.use(cors()); // 2º: Ativa o cors
+const app = express();
+const port = process.env.PORT || 3001;
+
+app.use(cors());
 app.use(express.json());
 
+// Conexão com o banco
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // <--- Isso garante que a Vercel aceite o Neon
-  },
+  user: "livro_user",
+  password: "Leo99294",
+  host: "localhost",
+  port: 5432,
+  database: "livros_db",
 });
+
 pool
   .connect()
   .then(() => console.log("✅ Conectado ao PostgreSQL com sucesso!"))
-  .catch((err) => console.error("❌ Erro ao conectar::", err.message));
+  .catch((err) => console.error("❌ Erro ao conectar:", err.message));
 
 // ====================== ROTAS ======================
-app.get("/", (req, res) => {
-  res.send("O servidor backend está funcionando!");
-});
+
 // Listar todos os livros
 app.get("/api/livros", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM playing_with_neon ORDER BY posicao ASC, id DESC",
+      "SELECT * FROM livros ORDER BY posicao ASC, id DESC",
     );
     res.json(result.rows);
   } catch (error) {
