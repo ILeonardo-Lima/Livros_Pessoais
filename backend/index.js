@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express(); // 1º: Cria o app
+const port = process.env.PORT || 3001; // <--- ADICIONE ESTA LINHA!
 app.use(cors()); // 2º: Ativa o cors
 app.use(express.json());
 
