@@ -1,47 +1,30 @@
 const express = require("express");
 const { Pool } = require("pg");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const response = await fetch(
-  "https://livros-pessoal-api.vercel.app/api/livros",
-);
-
-dotenv.config();
+const cors = require("cors"); // IMPORTANTE
+require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 3001;
-
-app.use(cors());
+app.use(cors()); // LIBERA O ACESSO
 app.use(express.json());
 
-// Conexão com o banco
+// CONEXÃO CORRETA COM O NEON
 const pool = new Pool({
-  user: "livro_user",
-  password: "Leo99294",
-  host: "localhost",
-  port: 5432,
-  database: "livros_db",
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });
 
-pool
-  .connect()
-  .then(() => console.log("✅ Conectado ao PostgreSQL com sucesso!"))
-  .catch((err) => console.error("❌ Erro ao conectar:", err.message));
+// ROTA DE TESTE (Para não dar "Cannot GET /")
+app.get("/", (req, res) => res.send("API Rodando no Neon!"));
 
-// ====================== ROTAS ======================
-
-// Listar todos os livros
+// SUA ROTA DE LIVROS
 app.get("/api/livros", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM livros ORDER BY posicao ASC, id DESC",
+      "SELECT * FROM livros ORDER BY posicao ASC",
     );
     res.json(result.rows);
-  } catch (error) {
-    console.error("Erro ao buscar livros:", error.message);
-    res
-      .status(500)
-      .json({ error: "Erro ao buscar livros", details: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -124,7 +107,7 @@ app.delete("/api/livros/:id", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
+module.exports = app(port, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${port}`);
   console.log(`📚 Teste a API: http://localhost:${port}/api/livros`);
 });
