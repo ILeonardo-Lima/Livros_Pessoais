@@ -13,11 +13,8 @@ app.use(express.json());
 
 // Conexão com o banco
 const pool = new Pool({
-  user: "livro_user",
-  password: "Leo99294",
-  host: "localhost",
-  port: 5432,
-  database: "livros_db",
+  connectionString: process.env.DATABASE_URL, // Isso obriga a usar o link do Neon
+  ssl: { rejectUnauthorized: false }, // Necessário para o Neon
 });
 
 pool
