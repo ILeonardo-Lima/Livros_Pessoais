@@ -11,13 +11,10 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Conexão com o banco
+// Conexão com o banco (USANDO O NEON)
 const pool = new Pool({
-  user: "livro_user",
-  password: "Leo99294",
-  host: "localhost",
-  port: 5432,
-  database: "livros_db",
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });
 
 pool

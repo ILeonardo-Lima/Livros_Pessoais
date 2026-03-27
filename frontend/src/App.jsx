@@ -5,7 +5,9 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 // Ícones modernos do Lucide React
 import { Moon, Sun, Plus, Trash2, Edit3, BookOpen, Search } from "lucide-react";
 
-const api = axios.create({ baseURL: "http://localhost:3001" });
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3001",
+});
 const ItemType = "LIVRO";
 
 // Componente do Card de Livro (Corrigido e Alinhado)
