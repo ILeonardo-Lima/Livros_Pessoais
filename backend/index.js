@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 app.get("/api/livros", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM livros ORDER BY posicao ASC, id DESC",
+      "SELECT * FROM playing_with_neon ORDER BY posicao ASC, id DESC",
     );
     res.json(result.rows);
   } catch (error) {
