@@ -9,7 +9,7 @@ const app = express(); // Primeiro cria o app...
 app.use(cors()); // ...depois aplica o cors!
 app.use(express.json());
 
-// Conexão com o banco
+// Conexão com o banco0
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Isso obriga a usar o link do Neon
   ssl: { rejectUnauthorized: false }, // Necessário para o Neon
