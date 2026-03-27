@@ -1,20 +1,20 @@
 const express = require("express");
 const { Pool } = require("pg");
-const cors = require("cors"); // Apenas uma vez!
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-const app = express(); // Primeiro cria o app...
-app.use(cors()); // ...depois aplica o cors!
+const app = express(); // 1º: Cria o app
+app.use(cors()); // 2º: Ativa o cors
 app.use(express.json());
 
-// Conexão com o banco0
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Isso obriga a usar o link do Neon
-  ssl: { rejectUnauthorized: false }, // Necessário para o Neon
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // <--- Isso garante que a Vercel aceite o Neon
+  },
 });
-
 pool
   .connect()
   .then(() => console.log("✅ Conectado ao PostgreSQL com sucesso!"))
