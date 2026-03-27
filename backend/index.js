@@ -2,6 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -11,10 +12,13 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Conexão com o banco (USANDO O NEON)
+// Conexão com o banco
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
+  user: "livro_user",
+  password: "Leo99294",
+  host: "localhost",
+  port: 5432,
+  database: "livros_db",
 });
 
 pool
