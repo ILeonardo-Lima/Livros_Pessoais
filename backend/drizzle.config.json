@@ -3,6 +3,6 @@
   "out": "./drizzle",
   "dialect": "postgresql",
   "dbCredentials": {
-    "url": "postgresql://neondb_owner:npg_iAmF01SDgGOh@ep-lingering-block-angjhwd1-pooler.c-6.us-east-1.aws.neon.tech/livros?sslmode=require"
+    "url": "postgresql://neondb_owner:npg_iAmF01SDgGOh@ep-lingering-block-angjhwd1-pooler.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require"
   }
 }
