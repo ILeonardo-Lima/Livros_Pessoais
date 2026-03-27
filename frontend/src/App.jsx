@@ -94,6 +94,11 @@ function LivroCard({
               <span className="font-bold">Páginas:</span> {livro.paginas || "—"}
             </p>
 
+            {/* 4.Ano*/}
+            <p>
+              <span className="font-bold">Ano:</span> {livro.ano || "—"}
+            </p>
+
             {/* Status (Mantido no final) */}
             <p
               className={`font-bold mt-3 border-t ${darkMode ? "border-zinc-800" : "border-gray-100"} pt-2 ${
@@ -133,6 +138,7 @@ function LivroCard({
 function App() {
   const [livros, setLivros] = useState([]);
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("Todos");
   const [darkMode, setDarkMode] = useState(() => {
     const salvo = localStorage.getItem("tema_biblioteca");
     return salvo ? JSON.parse(salvo) : true;
@@ -207,13 +213,21 @@ function App() {
   };
 
   // Lógica de filtragem baseada na busca
-  const filtered = livros.filter(
-    (l) =>
-      l.titulo?.toLowerCase().includes(search.toLowerCase()) ||
-      l.autor?.toLowerCase().includes(search.toLowerCase()) ||
-      l.genero?.toLowerCase().includes(search.toLowerCase()) ||
-      l.isbn?.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filtered = livros.filter((l) => {
+    const termo = search.toLowerCase();
+
+    // Primeiro, verifica se o status bate com o filtro selecionado
+    const bateStatus = statusFilter === "Todos" || l.status === statusFilter;
+
+    // Depois, verifica se o texto da busca bate com os campos
+    const bateBusca =
+      l.titulo?.toLowerCase().includes(termo) ||
+      l.autor?.toLowerCase().includes(termo) ||
+      l.genero?.toLowerCase().includes(termo) ||
+      l.isbn?.includes(termo);
+
+    return bateStatus && bateBusca;
+  });
 
   // Lógica para abrir modal para criação
   const handleNovoLivro = () => {
@@ -284,16 +298,19 @@ function App() {
         className={`min-h-screen transition-colors duration-500 ${darkMode ? "bg-black" : "bg-slate-50"}`}
       >
         {/* Navbar que ocupa a largura toda (Full Width) sticky no topo */}
-        <nav className="bg-zinc-950 text-white py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50 shadow-2xl">
+        <nav className="bg-zinc-800 text-white py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50 shadow-2xl">
           <div className="flex items-center gap-2">
             <div className="bg-indigo-600 p-2 rounded-lg">
               <BookOpen size={24} />
             </div>
+
             <h1 className="text-xl font-black tracking-tighter">
-              ESTANTE TECH
+              MINHA ESTANTE
             </h1>
           </div>
-
+          <p className="text-zinc-800 text-1px">
+            Developed by Leonardo de Oliveira Lima - 2026
+          </p>
           <div className="flex items-center gap-4">
             {/* Botão de Dark Mode com ícones Lucide */}
             <button
@@ -316,11 +333,16 @@ function App() {
         <main className="w-full px-6 md:px-12 py-10">
           {/* Dashboard de Estatísticas Segmentado */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
-            {/* Total Geral */}
-            <div
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
+            {/* Botão Todos */}
+            <button
+              onClick={() => setStatusFilter("Todos")}
+              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center ${
+                statusFilter === "Todos"
+                  ? "ring-2 ring-indigo-500 scale-105 "
+                  : ""
+              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-indigo-100"}`}
             >
-              <p className="text-[10px] font-black uppercase tracking-tighter text-gray-500 mb-1">
+              <p className="text-[15px] font-black uppercase tracking-tighter text-gray-500 mb-1">
                 Total
               </p>
               <h2
@@ -328,13 +350,16 @@ function App() {
               >
                 {livros.length}
               </h2>
-            </div>
+            </button>
 
-            {/* Lidos - Verde */}
-            <div
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
+            {/* Botão Lidos */}
+            <button
+              onClick={() => setStatusFilter("Lido")}
+              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center  ${
+                statusFilter === "Lido" ? "ring-2 ring-green-500 scale-105" : ""
+              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-green-100"}`}
             >
-              <p className="text-[10px] font-black uppercase tracking-tighter text-green-500 mb-1">
+              <p className="text-[15px] font-black uppercase tracking-tighter text-green-500 mb-1">
                 Lidos
               </p>
               <h2
@@ -342,13 +367,18 @@ function App() {
               >
                 {totalLidos}
               </h2>
-            </div>
+            </button>
 
-            {/* Lendo - Âmbar */}
-            <div
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
+            {/* Botão Lendo */}
+            <button
+              onClick={() => setStatusFilter("Lendo")}
+              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center ${
+                statusFilter === "Lendo"
+                  ? "ring-2 ring-amber-500 scale-105"
+                  : ""
+              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-amber-100"}`}
             >
-              <p className="text-[10px] font-black uppercase tracking-tighter text-amber-500 mb-1">
+              <p className="text-[15px] font-black uppercase tracking-tighter text-amber-500 mb-1">
                 Lendo
               </p>
               <h2
@@ -356,13 +386,18 @@ function App() {
               >
                 {totalLendo}
               </h2>
-            </div>
+            </button>
 
-            {/* Não Lidos - Vermelho */}
-            <div
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
+            {/* Botão Não Lidos */}
+            <button
+              onClick={() => setStatusFilter("Não lido")}
+              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center ${
+                statusFilter === "Não lido"
+                  ? "ring-2 ring-rose-500 scale-105"
+                  : ""
+              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-rose-100"}`}
             >
-              <p className="text-[10px] font-black uppercase tracking-tighter text-rose-500 mb-1">
+              <p className="text-[15px] font-black uppercase tracking-tighter text-rose-500 mb-1">
                 Fila de Espera
               </p>
               <h2
@@ -370,7 +405,7 @@ function App() {
               >
                 {totalNaoLidos}
               </h2>
-            </div>
+            </button>
           </div>
           {/* Barra de Busca Moderna Ocupando todo o Espaço central */}
           <div className="relative max-w-2xl mx-auto mb-12">
@@ -408,7 +443,7 @@ function App() {
           </div>
         </main>
 
-        {/* Modal permanece igual, mas adicionei classes 'dark:' */}
+        {/* Modal */}
         {modalOpen && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
             <div
