@@ -178,12 +178,13 @@ export default function App() {
     }
   }, []);
 
-  // Busca os livros apenas uma vez ao abrir o site
+  // CORREÇÃO 1: Busca a lista APENAS na montagem (uma única vez)
   useEffect(() => {
     atualizarLista();
-  }, [atualizarLista]); // O segredo é deixar esses colchetes [] vazios
+    // Array vazio [] garante que isso não rode em todo render
+  }, [atualizarLista]);
 
-  // Salva o tema em um lugar separado
+  // CORREÇÃO 2: Salva o tema apenas quando o darkMode REALMENTE mudar
   useEffect(() => {
     localStorage.setItem("tema_biblioteca", JSON.stringify(darkMode));
   }, [darkMode]);
