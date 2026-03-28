@@ -8,6 +8,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("API da Minha Estante está online! 🚀");
+});
+
 // 1. LISTAR (Ordenado)
 app.get("/api/livros", async (req, res) => {
   try {
