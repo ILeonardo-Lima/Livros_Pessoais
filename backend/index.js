@@ -44,75 +44,45 @@ app.put("/api/livros/reordenar", async (req, res) => {
 });
 
 // 3. Criar novo livro (Corrigido para usar Drizzle)
+// ... (mantenha o topo igual)
+
+// Rota para criar livro (Corrigida para Drizzle)
 app.post("/api/livros", async (req, res) => {
   try {
-    const { titulo, autor, ano, genero, paginas, status, capaUrl, isbn } =
-      req.body;
-
-    const novoLivro = await db
-      .insert(livros)
-      .values({
-        titulo,
-        autor,
-        ano: ano ? parseInt(ano) : null,
-        genero,
-        paginas: paginas ? parseInt(paginas) : null,
-        status: status || "Não lido",
-        capaUrl,
-        isbn,
-        ordem: 0, // Valor padrão para novos livros
-      })
-      .returning();
-
-    res.status(201).json(novoLivro[0]);
+    const novo = await db.insert(livros).values(req.body).returning();
+    res.json(novo[0]);
   } catch (error) {
-    console.error("Erro ao criar:", error);
+    console.error(error);
     res.status(500).json({ error: "Erro ao criar livro" });
   }
 });
 
-// 4. Atualizar livro (Corrigido para usar Drizzle)
+// Rota para atualizar (Corrigida para Drizzle)
 app.put("/api/livros/:id", async (req, res) => {
-  const { id } = req.params;
   try {
-    const { titulo, autor, ano, genero, paginas, status, capaUrl, isbn } =
-      req.body;
-
-    const result = await db
+    const atualizado = await db
       .update(livros)
-      .set({
-        titulo,
-        autor,
-        ano: ano ? parseInt(ano) : null,
-        genero,
-        paginas: paginas ? parseInt(paginas) : null,
-        status,
-        capaUrl,
-        isbn,
-      })
-      .where(eq(livros.id, id))
+      .set(req.body)
+      .where(eq(livros.id, req.params.id))
       .returning();
-
-    res.json(result[0]);
+    res.json(atualizado[0]);
   } catch (error) {
-    console.error("Erro ao atualizar:", error);
-    res.status(500).json({ error: "Erro ao atualizar livro" });
+    console.error(error);
+    res.status(500).json({ error: "Erro ao atualizar" });
   }
 });
 
-// 5. Deletar livro (Corrigido para usar Drizzle)
+// Rota para deletar (Corrigida para Drizzle)
 app.delete("/api/livros/:id", async (req, res) => {
-  const { id } = req.params;
   try {
-    await db.delete(livros).where(eq(livros.id, id));
-    res.json({ message: "Livro deletado com sucesso!" });
+    await db.delete(livros).where(eq(livros.id, req.params.id));
+    res.json({ message: "Sucesso" });
   } catch (error) {
-    console.error("Erro ao deletar:", error);
-    res.status(500).json({ error: "Erro ao deletar livro" });
+    res.status(500).json({ error: "Erro ao deletar" });
   }
 });
 
-// Inicialização do servidor
+// Mude 'port' para 'PORT' (maiúsculo) para evitar erro de referência
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
