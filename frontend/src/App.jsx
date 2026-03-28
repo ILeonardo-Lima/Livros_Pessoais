@@ -181,7 +181,7 @@ export default function App() {
   // Busca os livros apenas uma vez ao abrir o site
   useEffect(() => {
     atualizarLista();
-  }, []); // O segredo é deixar esses colchetes [] vazios
+  }, [atualizarLista]); // O segredo é deixar esses colchetes [] vazios
 
   // Salva o tema em um lugar separado
   useEffect(() => {
