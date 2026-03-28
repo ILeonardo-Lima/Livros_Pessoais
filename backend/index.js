@@ -1,49 +1,54 @@
 const express = require("express");
-const { Pool } = require("pg");
-const cors = require("cors"); // IMPORTANTE
-require("dotenv").config();
+const cors = require("cors");
+const { db } = require("./db"); // Supondo que sua conexão Drizzle esteja aqui
+const { livros } = require("./schema"); // Supondo que seu schema esteja aqui
+const { eq } = require("drizzle-orm");
 
 const app = express();
-app.use(cors()); // LIBERA O ACESSO
+app.use(cors());
 app.use(express.json());
 
-// CONEXÃO CORRETA COM O NEON
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
-
-// ROTA DE TESTE (Para não dar "Cannot GET /")
-app.get("/", (req, res) => res.send("API Rodando no Neon!"));
-
-// SUA ROTA DE LIVROS
+// Rota para listar livros (Ordenados pelo campo 'ordem')
 app.get("/api/livros", async (req, res) => {
   try {
-    const result = await sql`SELECT * FROM livros ORDER BY posicao ASC`;
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const data = await db.select().from(livros).orderBy(livros.ordem);
+    res.json(data);
+  } catch (error) {
+    console.error("Erro ao buscar livros:", error);
+    res.status(500).json({ error: "Erro interno no servidor" });
   }
 });
 
-// Rota para salvar a nova ordenação
+// Rota para reordenar livros
 app.put("/api/livros/reordenar", async (req, res) => {
-  const { listaOrdenada } = req.body; // Array de IDs: [5, 2, 8...]
+  const { listaOrdenada } = req.body; // Array de IDs: [10, 5, 8...]
+
+  if (!listaOrdenada || !Array.isArray(listaOrdenada)) {
+    return res.status(400).json({ error: "Lista inválida" });
+  }
 
   try {
-    // Exemplo usando Drizzle ou SQL puro no Neon:
-    // Precisamos atualizar a coluna 'ordem' de cada livro baseado na posição do array
-    for (let i = 0; i < listaOrdered.length; i++) {
+    // Atualiza a ordem de cada livro no banco
+    for (let i = 0; i < listaOrdenada.length; i++) {
       await db
         .update(livros)
         .set({ ordem: i })
-        .where(eq(livros.id, listaOrdered[i]));
+        .where(eq(livros.id, listaOrdenada[i]));
     }
-
-    res.status(200).json({ message: "Ordem atualizada!" });
+    res.json({ message: "Ordem atualizada com sucesso" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao reordenar no banco" });
+    console.error("Erro ao reordenar:", error);
+    res.status(500).json({ error: "Erro ao salvar nova ordem" });
+  }
+});
+
+// Rota para criar livro
+app.post("/api/livros", async (req, res) => {
+  try {
+    const novoLivro = await db.insert(livros).values(req.body).returning();
+    res.json(novoLivro);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao criar livro" });
   }
 });
 
@@ -105,12 +110,9 @@ app.delete("/api/livros/:id", async (req, res) => {
 });
 
 // CORREÇÃO FINAL: Exportar para Vercel e porta para local
-const port = process.env.PORT || 3001;
-
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${port}`);
-  });
-}
+const PORT = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`🚀 Servidor rodando em http://localhost:${port}`);
+});
 
 module.exports = app;
