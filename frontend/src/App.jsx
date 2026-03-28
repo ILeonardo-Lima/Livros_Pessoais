@@ -178,12 +178,12 @@ export default function App() {
     }
   }, []);
 
-  // CORREÇÃO: Array de dependências vazio para rodar só UMA VEZ ao carregar
+  // Busca os livros apenas uma vez ao abrir o site
   useEffect(() => {
     atualizarLista();
-  }, []);
+  }, []); // O segredo é deixar esses colchetes [] vazios
 
-  // Sincronizar o tema em um efeito separado e isolado
+  // Salva o tema em um lugar separado
   useEffect(() => {
     localStorage.setItem("tema_biblioteca", JSON.stringify(darkMode));
   }, [darkMode]);
