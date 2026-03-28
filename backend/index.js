@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const { db } = require("./db");
-const { livros } = require("./schema");
+const { db } = require("./db"); // Agora ele vai achar o arquivo!
+const { livros } = require("./schema"); // Agora ele vai achar o arquivo!
 const { eq, asc } = require("drizzle-orm");
 
 const app = express();
