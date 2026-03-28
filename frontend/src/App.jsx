@@ -18,16 +18,19 @@ function LivroCard({
   moveCard,
   editar,
   excluir,
-  salvarOrdenacao,
+  salvarOrdemNoBanco, // Nome corrigido aqui
   darkMode,
+  livros, // Precisamos da lista atual para salvar
 }) {
   const [{ isDragging }, drag] = useDrag({
     type: ItemType,
     item: { index },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
-    // Salvar no banco apenas ao soltar o card
+    // Aqui é o segredo: quando parar de arrastar, ele salva a lista atual
     end: (item, monitor) => {
-      if (monitor.didDrop()) salvarOrdenacao();
+      if (monitor.didDrop()) {
+        salvarOrdemNoBanco(livros);
+      }
     },
   });
 
@@ -206,15 +209,21 @@ function App() {
   }, []);
 
   // Persistência da nova ordem no Banco de Dados
-  const salvarOrdenacaoNoBanco = async () => {
+  // 1. Função que envia para o Banco (Neon)
+
+  // 2. Função que o Drag and Drop chama
+  const salvarOrdemNoBanco = async (novaLista) => {
     try {
-      await api.put("/api/livros/reordenar", { livros });
-      console.log("Ordem salva no banco!");
+      const idsNaOrdem = novaLista.map((livro) => livro.id);
+      // Use 'api' (sua instância do axios) em vez de 'axios' puro com a URL do site
+      await api.put("/api/livros/reordenar", {
+        listaOrdenada: idsNaOrdem,
+      });
+      console.log("Ordem salva com sucesso no banco!");
     } catch (error) {
-      console.error("Erro ao salvar ordem", error);
+      console.error("Erro ao salvar ordem:", error);
     }
   };
-
   // Lógica de filtragem baseada na busca
   const filtered = livros.filter((l) => {
     const termo = search.toLowerCase();
@@ -440,7 +449,8 @@ function App() {
                 darkMode={darkMode}
                 excluir={handleExcluirLivro}
                 editar={handleEditarLivro}
-                salvarOrdenacao={salvarOrdenacaoNoBanco}
+                salvarOrdemNoBanco={salvarOrdemNoBanco} // Função de persistência
+                livros={livros} // Lista completa para mapear os IDs
               />
             ))}
           </div>

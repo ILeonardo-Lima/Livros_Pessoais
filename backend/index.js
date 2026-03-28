@@ -19,9 +19,7 @@ app.get("/", (req, res) => res.send("API Rodando no Neon!"));
 // SUA ROTA DE LIVROS
 app.get("/api/livros", async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT * FROM livros ORDER BY posicao ASC",
-    );
+    const result = await sql`SELECT * FROM livros ORDER BY posicao ASC`;
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -30,23 +28,22 @@ app.get("/api/livros", async (req, res) => {
 
 // Rota para salvar a nova ordenação
 app.put("/api/livros/reordenar", async (req, res) => {
-  const { livros } = req.body; // Recebe o array ordenado do frontend
+  const { listaOrdenada } = req.body; // Array de IDs: [5, 2, 8...]
 
   try {
-    // Usamos uma Promise.all para garantir que todos os updates terminem
-    await Promise.all(
-      livros.map((livro, index) => {
-        return pool.query("UPDATE livros SET posicao = $1 WHERE id = $2", [
-          index,
-          livro.id,
-        ]);
-      }),
-    );
+    // Exemplo usando Drizzle ou SQL puro no Neon:
+    // Precisamos atualizar a coluna 'ordem' de cada livro baseado na posição do array
+    for (let i = 0; i < listaOrdered.length; i++) {
+      await db
+        .update(livros)
+        .set({ ordem: i })
+        .where(eq(livros.id, listaOrdered[i]));
+    }
 
-    res.status(200).json({ message: "Ordem atualizada com sucesso!" });
+    res.status(200).json({ message: "Ordem atualizada!" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erro ao salvar ordenação" });
+    res.status(500).json({ error: "Erro ao reordenar no banco" });
   }
 });
 
