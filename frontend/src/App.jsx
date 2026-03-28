@@ -178,11 +178,12 @@ export default function App() {
     }
   }, []);
 
+  // CORREÇÃO: Array de dependências vazio para rodar só UMA VEZ ao carregar
   useEffect(() => {
     atualizarLista();
-  }, [atualizarLista]);
+  }, []);
 
-  // Grava o tema apenas quando o darkMode mudar
+  // Sincronizar o tema em um efeito separado e isolado
   useEffect(() => {
     localStorage.setItem("tema_biblioteca", JSON.stringify(darkMode));
   }, [darkMode]);
