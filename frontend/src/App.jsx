@@ -306,7 +306,7 @@ export default function App() {
               MINHA ESTANTE
             </h1>
           </div>
-          <p className="text-zinc-800 text-[1px]">
+          <p className="text-zinc-800 text-[10px]">
             Developed by Leonardo de Oliveira Lima - 2026
           </p>
           <div className="flex items-center gap-4">
