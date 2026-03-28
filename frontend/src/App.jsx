@@ -181,8 +181,8 @@ export default function App() {
   // CORREÇÃO 1: Busca a lista APENAS na montagem (uma única vez)
   useEffect(() => {
     atualizarLista();
-    // Array vazio [] garante que isso não rode em todo render
-  }, [atualizarLista]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // CORREÇÃO 2: Salva o tema apenas quando o darkMode REALMENTE mudar
   useEffect(() => {
