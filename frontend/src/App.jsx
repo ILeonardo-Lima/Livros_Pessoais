@@ -182,6 +182,11 @@ export default function App() {
     atualizarLista();
   }, [atualizarLista]);
 
+  // Grava o tema apenas quando o darkMode mudar
+  useEffect(() => {
+    localStorage.setItem("tema_biblioteca", JSON.stringify(darkMode));
+  }, [darkMode]);
+
   // Lógica de movimentação visual dos cards (DND)
   const moveCard = useCallback((fromIndex, toIndex) => {
     setLivros((prevLivros) => {
