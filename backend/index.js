@@ -1,17 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-const { db } = require("./db"); // Supondo que sua conexão Drizzle esteja aqui
-const { livros } = require("./schema"); // Supondo que seu schema esteja aqui
-const { eq } = require("drizzle-orm");
+const { db } = require("./db");
+const { livros } = require("./schema");
+const { eq, asc } = require("drizzle-orm");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rota para listar livros (Ordenados pelo campo 'ordem')
+// 1. Listar livros (Ordenados pelo campo 'ordem')
 app.get("/api/livros", async (req, res) => {
   try {
-    const data = await db.select().from(livros).orderBy(livros.ordem);
+    // Usando asc para garantir a ordem crescente
+    const data = await db.select().from(livros).orderBy(asc(livros.ordem));
     res.json(data);
   } catch (error) {
     console.error("Erro ao buscar livros:", error);
@@ -19,16 +20,16 @@ app.get("/api/livros", async (req, res) => {
   }
 });
 
-// Rota para reordenar livros
+// 2. Reordenar livros (A rota que estava dando erro 500)
 app.put("/api/livros/reordenar", async (req, res) => {
-  const { listaOrdenada } = req.body; // Array de IDs: [10, 5, 8...]
+  const { listaOrdenada } = req.body;
 
   if (!listaOrdenada || !Array.isArray(listaOrdenada)) {
     return res.status(400).json({ error: "Lista inválida" });
   }
 
   try {
-    // Atualiza a ordem de cada livro no banco
+    // Atualiza a ordem de cada livro no banco via Drizzle
     for (let i = 0; i < listaOrdenada.length; i++) {
       await db
         .update(livros)
@@ -42,77 +43,79 @@ app.put("/api/livros/reordenar", async (req, res) => {
   }
 });
 
-// Rota para criar livro
+// 3. Criar novo livro (Corrigido para usar Drizzle)
 app.post("/api/livros", async (req, res) => {
   try {
-    const novoLivro = await db.insert(livros).values(req.body).returning();
-    res.json(novoLivro);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao criar livro" });
-  }
-});
+    const { titulo, autor, ano, genero, paginas, status, capaUrl, isbn } =
+      req.body;
 
-// Criar novo livro
-app.post("/api/livros", async (req, res) => {
-  const { titulo, autor, ano, genero, paginas, status, capaUrl, isbn } =
-    req.body;
-  try {
-    const result = await pool.query(
-      `INSERT INTO livros (titulo, autor, ano, genero, paginas, status, capaUrl, isbn)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-      [
+    const novoLivro = await db
+      .insert(livros)
+      .values({
         titulo,
         autor,
-        ano,
+        ano: ano ? parseInt(ano) : null,
         genero,
-        paginas,
-        status || "Não lido",
+        paginas: paginas ? parseInt(paginas) : null,
+        status: status || "Não lido",
         capaUrl,
         isbn,
-      ],
-    );
-    res.status(201).json(result.rows[0]);
+        ordem: 0, // Valor padrão para novos livros
+      })
+      .returning();
+
+    res.status(201).json(novoLivro[0]);
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao criar:", error);
     res.status(500).json({ error: "Erro ao criar livro" });
   }
 });
 
-// Atualizar livro
+// 4. Atualizar livro (Corrigido para usar Drizzle)
 app.put("/api/livros/:id", async (req, res) => {
   const { id } = req.params;
-  const { titulo, autor, ano, genero, paginas, status, capaUrl, isbn } =
-    req.body;
   try {
-    const result = await pool.query(
-      `UPDATE livros 
-       SET titulo = $1, autor = $2, ano = $3, genero = $4, paginas = $5, 
-           status = $6, capaUrl = $7, isbn = $8 
-       WHERE id = $9 RETURNING *`,
-      [titulo, autor, ano, genero, paginas, status, capaUrl, isbn, id],
-    );
-    res.json(result.rows[0]);
+    const { titulo, autor, ano, genero, paginas, status, capaUrl, isbn } =
+      req.body;
+
+    const result = await db
+      .update(livros)
+      .set({
+        titulo,
+        autor,
+        ano: ano ? parseInt(ano) : null,
+        genero,
+        paginas: paginas ? parseInt(paginas) : null,
+        status,
+        capaUrl,
+        isbn,
+      })
+      .where(eq(livros.id, id))
+      .returning();
+
+    res.json(result[0]);
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao atualizar:", error);
     res.status(500).json({ error: "Erro ao atualizar livro" });
   }
 });
 
-// Deletar livro
+// 5. Deletar livro (Corrigido para usar Drizzle)
 app.delete("/api/livros/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    await pool.query("DELETE FROM livros WHERE id = $1", [req.params.id]);
+    await db.delete(livros).where(eq(livros.id, id));
     res.json({ message: "Livro deletado com sucesso!" });
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao deletar:", error);
     res.status(500).json({ error: "Erro ao deletar livro" });
   }
 });
 
-// CORREÇÃO FINAL: Exportar para Vercel e porta para local
+// Inicialização do servidor
 const PORT = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
 
 module.exports = app;
