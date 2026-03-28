@@ -121,7 +121,9 @@ function LivroCard({
         </div>
 
         {/* Botões do Rodapé perfeitamente alinhados */}
-        <div className="mt-6 flex gap-3 pt-4 border-t ${darkMode ? 'border-zinc-800' : 'border-gray-100'}">
+        <div
+          className={`mt-6 flex gap-3 pt-4 border-t ${darkMode ? "border-zinc-800" : "border-gray-100"}`}
+        >
           <button
             onClick={() => editar(livro)}
             className="flex-1 bg-indigo-400 hover:bg-indigo-800 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-2 text-sm"
@@ -140,8 +142,8 @@ function LivroCard({
   );
 }
 
-// Função Principal do App
-function App() {
+// CORREÇÃO: Exportação direta para evitar erro de redeclaração de bloco
+export default function App() {
   const [livros, setLivros] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("Todos");
@@ -152,10 +154,12 @@ function App() {
   const totalLidos = livros.filter((l) => l.status === "Lido").length;
   const totalLendo = livros.filter((l) => l.status === "Lendo").length;
   const totalNaoLidos = livros.filter((l) => l.status === "Não lido").length;
+
   useEffect(() => {
     localStorage.setItem("tema_biblioteca", JSON.stringify(darkMode));
   }, [darkMode]);
-  const [modalOpen, setModalOpen] = useState(false); // Esta linha estava com erro no seu print
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Estado para controlar se estamos editando ou criando um novo livro
   const [editingId, setEditingId] = useState(null);
@@ -165,7 +169,6 @@ function App() {
     status: "Não lido",
   });
 
-  // CORREÇÃO DO ERRO DO PRINT: Função estável com useCallback
   const atualizarLista = useCallback(async () => {
     try {
       const res = await api.get("/api/livros");
@@ -173,30 +176,11 @@ function App() {
     } catch (error) {
       console.error("Erro ao carregar livros", error);
     }
-  }, []); // Array de dependência vazio garante que a função não mude
+  }, []);
 
-  // CORREÇÃO DO ERRO DO PRINT: useEffect isolado para carregamento inicial
   useEffect(() => {
-    let montado = true; // Boas práticas para evitar problemas de race condition
-
-    const carregarDadosIniciais = async () => {
-      try {
-        const res = await api.get("/api/livros");
-        if (montado) {
-          setLivros(res.data);
-        }
-      } catch (error) {
-        console.error("Erro no carregamento inicial", error);
-      }
-    };
-
-    carregarDadosIniciais();
-
-    // Função de limpeza: removemos a dependência que causava o alerta sublinhado
-    return () => {
-      montado = false;
-    };
-  }, []); // Array vazio aqui é o segredo para o erro sumir
+    atualizarLista();
+  }, [atualizarLista]);
 
   // Lógica de movimentação visual dos cards (DND)
   const moveCard = useCallback((fromIndex, toIndex) => {
@@ -208,14 +192,10 @@ function App() {
     });
   }, []);
 
-  // Persistência da nova ordem no Banco de Dados
-  // 1. Função que envia para o Banco (Neon)
-
-  // 2. Função que o Drag and Drop chama
+  // CORREÇÃO: Removida a duplicata desta função que causava erro na linha 213/227
   const salvarOrdemNoBanco = async (novaLista) => {
     try {
       const idsNaOrdem = novaLista.map((livro) => livro.id);
-      // Use 'api' (sua instância do axios) em vez de 'axios' puro com a URL do site
       await api.put("/api/livros/reordenar", {
         listaOrdenada: idsNaOrdem,
       });
@@ -224,6 +204,7 @@ function App() {
       console.error("Erro ao salvar ordem:", error);
     }
   };
+
   // Lógica de filtragem baseada na busca
   const filtered = livros.filter((l) => {
     const termo = search.toLowerCase();
@@ -267,7 +248,7 @@ function App() {
       paginas: livro.paginas || "",
       ano: livro.ano || "",
       status: livro.status || "Não lido",
-      capaUrl: livro.capaUrl || livro.capaurl || "", // Garante compatibilidade com capaurl (minúsculo)
+      capaUrl: livro.capaUrl || livro.capaurl || "",
     });
     setEditingId(livro.id);
     setModalOpen(true);
@@ -298,18 +279,16 @@ function App() {
       atualizarLista();
       alert("✅ Livro salvo com sucesso!");
     } catch (error) {
-      console.error("Erro detalhado:", error); // Agora a variável está sendo usada!
+      console.error("Erro detalhado:", error);
       alert("Erro ao salvar");
     }
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {/* Root Container com Modo Escuro (Fundo Preto / Slate 50) */}
       <div
         className={`min-h-screen transition-colors duration-500 ${darkMode ? "bg-black" : "bg-slate-50"}`}
       >
-        {/* Navbar que ocupa a largura toda (Full Width) sticky no topo */}
         <nav className="bg-zinc-800 text-white py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50 shadow-2xl">
           <div className="flex items-center gap-2">
             <div className="bg-indigo-600 p-2 rounded-lg">
@@ -320,11 +299,10 @@ function App() {
               MINHA ESTANTE
             </h1>
           </div>
-          <p className="text-zinc-800 text-1px">
+          <p className="text-zinc-800 text-[1px]">
             Developed by Leonardo de Oliveira Lima - 2026
           </p>
           <div className="flex items-center gap-4">
-            {/* Botão de Dark Mode com ícones Lucide */}
             <button
               onClick={() => setDarkMode(!darkMode)}
               className={`p-2.5 rounded-xl transition-all ${darkMode ? "bg-zinc-800 text-yellow-400" : "bg-zinc-800 text-gray-400 hover:text-white"}`}
@@ -343,7 +321,6 @@ function App() {
         </nav>
 
         <main className="w-full px-6 md:px-12 py-10">
-          {/* Dashboard de Estatísticas Segmentado */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             {/* Botão Todos */}
             <button
@@ -419,7 +396,7 @@ function App() {
               </h2>
             </button>
           </div>
-          {/* Barra de Busca Moderna Ocupando todo o Espaço central */}
+
           <div className="relative max-w-2xl mx-auto mb-12">
             <Search
               className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"
@@ -438,7 +415,6 @@ function App() {
             />
           </div>
 
-          {/* Grade Responsiva Ocupando Tudo (Full Width até 6 colunas) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
             {filtered.map((livro, index) => (
               <LivroCard
@@ -449,14 +425,13 @@ function App() {
                 darkMode={darkMode}
                 excluir={handleExcluirLivro}
                 editar={handleEditarLivro}
-                salvarOrdemNoBanco={salvarOrdemNoBanco} // Função de persistência
-                livros={livros} // Lista completa para mapear os IDs
+                salvarOrdemNoBanco={salvarOrdemNoBanco}
+                livros={livros}
               />
             ))}
           </div>
         </main>
 
-        {/* Modal */}
         {modalOpen && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
             <div
@@ -469,7 +444,6 @@ function App() {
               </h2>
 
               <form onSubmit={salvarLivro} className="space-y-4">
-                {/* Linha 1: Título e Autor */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label
@@ -505,7 +479,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* Linha 2: Gênero e ISBN */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label
@@ -519,7 +492,7 @@ function App() {
                       onChange={(e) =>
                         setForm({ ...form, genero: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
                     />
                   </div>
                   <div className="space-y-1">
@@ -534,12 +507,11 @@ function App() {
                       onChange={(e) =>
                         setForm({ ...form, isbn: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
                     />
                   </div>
                 </div>
 
-                {/* Linha 3: Páginas, Ano e Status */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   <div className="space-y-1">
                     <label
@@ -549,12 +521,11 @@ function App() {
                     </label>
                     <input
                       type="number"
-                      placeholder="0"
                       value={form.paginas}
                       onChange={(e) =>
                         setForm({ ...form, paginas: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
                     />
                   </div>
                   <div className="space-y-1">
@@ -565,12 +536,11 @@ function App() {
                     </label>
                     <input
                       type="number"
-                      placeholder="2024"
                       value={form.ano}
                       onChange={(e) =>
                         setForm({ ...form, ano: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
                     />
                   </div>
                   <div className="space-y-1 col-span-2 md:col-span-1">
@@ -584,7 +554,7 @@ function App() {
                       onChange={(e) =>
                         setForm({ ...form, status: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
                     >
                       <option value="Não lido">Não lido</option>
                       <option value="Lendo">Lendo</option>
@@ -593,7 +563,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* Campo de Imagem */}
                 <div className="space-y-1">
                   <label
                     className={`text-xs font-bold uppercase ${darkMode ? "text-zinc-500" : "text-gray-400"}`}
@@ -606,7 +575,7 @@ function App() {
                     onChange={(e) =>
                       setForm({ ...form, capaUrl: e.target.value })
                     }
-                    className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                    className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
                   />
                 </div>
 
@@ -614,15 +583,13 @@ function App() {
                   <button
                     type="button"
                     onClick={() => setModalOpen(false)}
-                    className={
-                      "flex-1 py-4 rounded-2xl font-bold bg-rose-800 text-white hover:bg-rose-700 shadow-lg shadow-rose-500/30 transition"
-                    }
+                    className="flex-1 py-4 rounded-2xl font-bold bg-rose-800 text-white hover:bg-rose-700 transition"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-4 rounded-2xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-500/30 transition"
+                    className="flex-1 py-4 rounded-2xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition"
                   >
                     Salvar Livro
                   </button>
@@ -635,5 +602,3 @@ function App() {
     </DndProvider>
   );
 }
-
-export default App;
