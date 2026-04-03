@@ -5,8 +5,7 @@ Site Oficial: https://livros-pessoais.vercel.app/
 
 Sistema Fullstack para gerenciamento de biblioteca pessoal, permitindo o cadastro, edição, exclusão e organização visual de livros.
 
-[!IMPORTANT]
-🚧 Status do Projeto: Em produção e desenvolvimento contínuo.
+<h4>🚧 Status do Projeto: Em produção e desenvolvimento contínuo.</h4>
 Este projeto está sendo construído com o auxílio de Inteligência Artificial (IA) para otimização de código, resolução de erros de renderização e estruturação do banco de dados.
 
 <h4>🚀 Funcionalidades Atuais</h4>
@@ -24,7 +23,7 @@ Este projeto está sendo construído com o auxílio de Inteligência Artificial 
 - React DnD (API de Drag and Drop)
 - Lucide React (Ícones)
 
-<b>Backend & Banco de Dados</b>
+<b>Backend & Banco de Dados:</b>
 - Node.js & Express
 - Drizzle ORM (Manipulação eficiente do PostgreSQL)
 - Neon DB (PostgreSQL Serverless)
@@ -45,7 +44,7 @@ Este projeto está sendo construído com o auxílio de Inteligência Artificial 
 
 <h4>📸 Preview do Projeto</h4>
 
-<img width="1918" height="831" alt="Captura de tela 2026-04-03 171841" src="https://github.com/user-attachments/assets/ddcc5d6f-5a34-4a6d-ba91-3d96fee730bf" /> <br>
+<img width="1918" height="831" alt="Captura de tela 2026-04-03 171841" src="https://github.com/user-attachments/assets/ddcc5d6f-5a34-4a6d-ba91-3d96fee730bf" /> <br><br>
 <img width="1919" height="873" alt="Captura de tela 2026-04-03 173305" src="https://github.com/user-attachments/assets/0ee6e280-abe1-41e3-8e3a-2095e3ae8927" />
 
 <h4>👤 Desenvolvedor<h4>
