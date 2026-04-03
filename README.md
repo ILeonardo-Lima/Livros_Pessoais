@@ -1,9 +1,9 @@
  <h3>📚Minha Estante - Gerenciador de Livros Pessoal</h3>
 
+<h4>Sistema Fullstack para gerenciamento de biblioteca pessoal, permitindo o cadastro, edição, exclusão e organização visual de livros.</h4>
+
 <h4>🔗 Acesse o projeto:</h4>
 Site Oficial: https://livros-pessoais.vercel.app/
-
-Sistema Fullstack para gerenciamento de biblioteca pessoal, permitindo o cadastro, edição, exclusão e organização visual de livros.
 
 <h4>🚧 Status do Projeto: Em produção e desenvolvimento contínuo.</h4>
 Este projeto está sendo construído com o auxílio de Inteligência Artificial (IA) para otimização de código, resolução de erros de renderização e estruturação do banco de dados.
