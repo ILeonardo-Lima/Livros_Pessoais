@@ -9,6 +9,7 @@ Site Oficial: https://livros-pessoais.vercel.app/
 Este projeto está sendo construído com o auxílio de Inteligência Artificial (IA) para otimização de código, resolução de erros de renderização e estruturação do banco de dados.
 
 <h4>🚀 Funcionalidades Atuais</h4>
+
 - CRUD Completo: Cadastro e edição detalhada de livros (Título, Autor, Gênero, ISBN, Páginas, Ano e Capa).
 - Drag and Drop (Arrastar e Soltar): Reordenação visual dinâmica dos cards na estante, com persistência automática da nova ordem no banco de dados.
 - Modo Dark/Light: Interface adaptável com alternância de tema e salvamento da preferência no navegador.
