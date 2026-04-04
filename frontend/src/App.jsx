@@ -353,7 +353,7 @@ export default function App() {
               onClick={() => setStatusFilter("Lido")}
               className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Lido" ? "ring-2 ring-green-500 scale-105" : ""
-              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-green-100"}`}
+              } ${darkMode ? "bg-zinc-900 border-green-800 hover:bg-zinc-800" : "bg-white border-green-100 hover:bg-green-100"}`}
             >
               <p className="text-[15px] font-black uppercase tracking-tighter text-green-500 mb-1">
                 Lidos
