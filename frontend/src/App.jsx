@@ -335,7 +335,7 @@ export default function App() {
               className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Todos"
                   ? "ring-4 ring-indigo-500 scale-105 shadow-indigo-500/20"
-                  : "border-gray-100 dark:border-zinc-900"
+                  : ""
               } ${darkMode ? "bg-zinc-900 border-purple-800 hover:bg-zinc-800" : "bg-white border-purple-800 hover:bg-indigo-100"}`}
             >
               <p className="text-[15px] font-black uppercase tracking-tighter text-gray-500 mb-1">
