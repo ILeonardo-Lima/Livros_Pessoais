@@ -126,9 +126,10 @@ function LivroCard({
         >
           <button
             onClick={() => editar(livro)}
-            className="flex-1 bg-indigo-400 hover:bg-indigo-800 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-2 text-sm"
+            className="flex-1 flex items-center justify-center gap-2 bg-indigo-600/20 text-indigo-400 p-2.5 rounded-xl hover:bg-indigo-600 hover:text-white transition-all active:scale-95"
           >
-            <Edit3 size={16} /> Editar
+            <Edit3 size={18} />
+            <span className="hidden sm:inline">Editar</span>
           </button>
           <button
             onClick={() => excluir(livro.id)}
