@@ -332,7 +332,7 @@ export default function App() {
             {/* Botão Todos */}
             <button
               onClick={() => setStatusFilter("Todos")}
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center ${
+              className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Todos"
                   ? "ring-2 ring-indigo-500 scale-105 "
                   : ""
