@@ -336,7 +336,7 @@ export default function App() {
                 statusFilter === "Todos"
                   ? "ring-4 ring-indigo-500 scale-105 shadow-indigo-500/20"
                   : "border-gray-100 dark:border-zinc-900"
-              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-blue-600-100 hover:bg-indigo-100"}`}
+              } ${darkMode ? "bg-zinc-900 border-purple-800 hover:bg-zinc-800" : "bg-white border-purple-800 hover:bg-indigo-100"}`}
             >
               <p className="text-[15px] font-black uppercase tracking-tighter text-gray-500 mb-1">
                 Total
