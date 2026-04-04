@@ -327,7 +327,7 @@ export default function App() {
           </div>
         </nav>
 
-        <main className="w-full px-6 md:px-12 py-10">
+        <main className="w-full px-3 md:px-12 py-6 sm:py-10">
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             {/* Botão Todos */}
             <button
