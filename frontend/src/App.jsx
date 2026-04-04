@@ -446,7 +446,7 @@ export default function App() {
         {modalOpen && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
             <div
-              className={`rounded-3xl w-full max-w-2xl p-8 shadow-2xl border ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
+              className={`rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-5 sm:p-8 shadow-2xl border ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
             >
               <h2
                 className={`text-2xl font-bold mb-6 ${darkMode ? "text-white" : "text-gray-900"}`}
@@ -454,8 +454,10 @@ export default function App() {
                 {editingId ? "Editar Livro" : "Novo Livro"}
               </h2>
 
-              <form onSubmit={salvarLivro} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={salvarLivro} className="space-y-3 sm:space-y-4">
+                <div
+                  className={`text-lg sm:text-2xl font-bold mb-4 sm:mb-6 ${darkMode ? "text-white" : "text-gray-900"}`}
+                >
                   <div className="space-y-1">
                     <label
                       className={`text-xs font-bold uppercase ${darkMode ? "text-zinc-500" : "text-gray-400"}`}
