@@ -312,16 +312,20 @@ export default function App() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className={`p-1.5 sm:p-2.5 rounded-xl bg-zinc-700 hover:bg-zinc-600 transition-colors shadow-lg ${darkMode ? "bg-zinc-800 text-yellow-400" : "bg-zinc-800 text-gray-400 hover:text-white"}`}
+              className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${
+                darkMode
+                  ? "bg-zinc-800 text-yellow-400"
+                  : "bg-zinc-800 text-gray-400"
+              } hover:bg-zinc-700`}
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
             <button
               onClick={handleNovoLivro}
-              className="bg-white text-black px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition flex items-center gap-2 text-sm"
+              className="bg-white text-black w-10 h-10 sm:w-auto sm:px-5 sm:py-2.5 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center sm:gap-2 text-sm shadow-md active:scale-95"
             >
-              <Plus size={18} />{" "}
+              <Plus size={20} />{" "}
               <span className="hidden sm:inline">Novo Livro</span>
             </button>
           </div>
