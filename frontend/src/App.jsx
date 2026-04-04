@@ -338,7 +338,7 @@ export default function App() {
                   : ""
               } ${darkMode ? "bg-zinc-900 border-purple-800 hover:bg-zinc-800" : "bg-white border-purple-800 hover:bg-indigo-100"}`}
             >
-              <p className="text-[15px] font-black uppercase tracking-tighter text-gray-500 mb-1">
+              <p className="text-[15px] font-black uppercase tracking-tighter text-purple-500 mb-1">
                 Total
               </p>
               <h2
@@ -353,7 +353,7 @@ export default function App() {
               onClick={() => setStatusFilter("Lido")}
               className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Lido" ? "ring-2 ring-green-500 scale-105" : ""
-              } ${darkMode ? "bg-zinc-900 border-green-800 hover:bg-zinc-800" : "bg-white border-green-100 hover:bg-green-100"}`}
+              } ${darkMode ? "bg-zinc-900 border-green-800 hover:bg-zinc-800" : "bg-white border-green-800 hover:bg-green-100"}`}
             >
               <p className="text-[15px] font-black uppercase tracking-tighter text-green-500 mb-1">
                 Lidos
@@ -372,7 +372,7 @@ export default function App() {
                 statusFilter === "Lendo"
                   ? "ring-2 ring-amber-500 scale-105"
                   : ""
-              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-amber-100"}`}
+              } ${darkMode ? "bg-zinc-900 border-amber-500 hover:bg-zinc-800" : "bg-white border-amber-500 hover:bg-amber-100"}`}
             >
               <p className="text-[15px] font-black uppercase tracking-tighter text-amber-500 mb-1">
                 Lendo
@@ -391,7 +391,7 @@ export default function App() {
                 statusFilter === "Não lido"
                   ? "ring-2 ring-rose-500 scale-105"
                   : ""
-              } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-rose-100"}`}
+              } ${darkMode ? "bg-zinc-900 border-rose-800 hover:bg-zinc-800" : "bg-white border-rose-800 hover:bg-rose-100"}`}
             >
               <p className="text-[15px] font-black uppercase tracking-tighter text-rose-500 mb-1">
                 Fila de Espera
