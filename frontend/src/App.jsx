@@ -332,7 +332,7 @@ export default function App() {
             {/* Botão Todos */}
             <button
               onClick={() => setStatusFilter("Todos")}
-              className={`flex-1 min-w-[120px] sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
+              className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Todos"
                   ? "ring-2 ring-indigo-500 scale-105 "
                   : ""
@@ -351,7 +351,7 @@ export default function App() {
             {/* Botão Lidos */}
             <button
               onClick={() => setStatusFilter("Lido")}
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center  ${
+              className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Lido" ? "ring-2 ring-green-500 scale-105" : ""
               } ${darkMode ? "bg-zinc-900 border-zinc-800 hover:bg-zinc-800" : "bg-white border-gray-100 hover:bg-green-100"}`}
             >
@@ -368,7 +368,7 @@ export default function App() {
             {/* Botão Lendo */}
             <button
               onClick={() => setStatusFilter("Lendo")}
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center ${
+              className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Lendo"
                   ? "ring-2 ring-amber-500 scale-105"
                   : ""
@@ -387,7 +387,7 @@ export default function App() {
             {/* Botão Não Lidos */}
             <button
               onClick={() => setStatusFilter("Não lido")}
-              className={`flex-1 min-w-37.5 max-w-50 p-4 rounded-3xl border shadow-sm transition-all text-center ${
+              className={`flex-1 min-w-30 sm:min-w-37.5 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border shadow-sm transition-all text-center${
                 statusFilter === "Não lido"
                   ? "ring-2 ring-rose-500 scale-105"
                   : ""
