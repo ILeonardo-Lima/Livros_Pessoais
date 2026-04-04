@@ -307,9 +307,7 @@ export default function App() {
               MINHA ESTANTE
             </h1>
           </div>
-          <h3 className="text-zinc-800">
-            Developed by Leonardo de Oliveira Lima - 2026
-          </h3>
+
           <div className="flex items-center gap-4">
             <button
               onClick={() => setDarkMode(!darkMode)}
