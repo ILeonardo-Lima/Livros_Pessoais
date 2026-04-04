@@ -472,7 +472,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, titulo: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     />
                   </div>
                   <div className="space-y-1">
@@ -488,7 +488,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, autor: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border focus:ring-2 focus:ring-indigo-500 outline-none transition ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     />
                   </div>
                 </div>
@@ -506,7 +506,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, genero: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     />
                   </div>
                   <div className="space-y-1">
@@ -521,7 +521,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, isbn: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     />
                   </div>
                 </div>
@@ -539,7 +539,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, paginas: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     />
                   </div>
                   <div className="space-y-1">
@@ -554,7 +554,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, ano: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     />
                   </div>
                   <div className="space-y-1 col-span-2 md:col-span-1">
@@ -568,7 +568,7 @@ export default function App() {
                       onChange={(e) =>
                         setForm({ ...form, status: e.target.value })
                       }
-                      className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                      className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                     >
                       <option value="Não lido">Não lido</option>
                       <option value="Lendo">Lendo</option>
@@ -589,7 +589,7 @@ export default function App() {
                     onChange={(e) =>
                       setForm({ ...form, capaUrl: e.target.value })
                     }
-                    className={`w-full p-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white" : "bg-gray-50 border-gray-200"}`}
+                    className={`w-full py-2 px-3 rounded-xl border ${darkMode ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500" : "bg-gray-50 border-gray-100"} focus:outline-none focus:border-indigo-500 transition-all text-sm`}
                   />
                 </div>
 
