@@ -499,7 +499,7 @@ export default function App() {
         {modalOpen && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
             <div
-              className={`rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-5 sm:p-8 shadow-2xl border ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100"}`}
+              className={`rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-5 sm:p-8 shadow-2xl border ${darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-100 hover:bg-gray-300"}`}
             >
               <h2
                 className={`text-2xl font-bold mb-6 ${darkMode ? "text-white" : "text-gray-900"}`}
