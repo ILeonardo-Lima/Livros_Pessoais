@@ -3,8 +3,17 @@ import axios from "axios";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 // Ícones modernos do Lucide React
-import { Moon, Sun, Plus, Trash2, Edit3, BookOpen, Search } from "lucide-react";
-
+import {
+  Moon,
+  Sun,
+  Plus,
+  Trash2,
+  Edit3,
+  BookOpen,
+  Search,
+  List,
+  LayoutGrid,
+} from "lucide-react";
 const api = axios.create({
   baseURL: "https://livros-pessoais-api.vercel.app",
 });
