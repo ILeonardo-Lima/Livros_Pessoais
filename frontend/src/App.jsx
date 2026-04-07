@@ -507,7 +507,7 @@ export default function App() {
                   </div>
 
                   {/* Info central (Título, Autor, Gênero, Status) */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 flex flex-col gap-1">
                     <h3
                       className={`font-bold text-base truncate ${darkMode ? "text-white" : "text-gray-900"}`}
                     >
@@ -528,8 +528,8 @@ export default function App() {
                             : "bg-indigo-50 text-indigo-600"
                         }`}
                       >
-                        <p
-                          className={`font-bold  ${
+                        <div
+                          className={`mt-2 flex items-center  ${
                             livro.status === "Lido"
                               ? "text-green-500"
                               : livro.status === "Lendo"
@@ -537,8 +537,10 @@ export default function App() {
                                 : "text-red-500"
                           }`}
                         >
-                          {livro.status}
-                        </p>
+                          <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-sm">
+                            {livro.status}
+                          </span>
+                        </div>
                       </span>
                     </div>
                   </div>
