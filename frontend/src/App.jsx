@@ -481,7 +481,7 @@ export default function App() {
                 // NOVO MODO LISTA (Estilo Apple Books)
                 <div
                   key={livro.id}
-                  className={`flex items-center gap-4 p-4 border-b ${
+                  className={`flex-1 min-w-0 flex flex-col gap-1 ${
                     darkMode
                       ? "bg-zinc-950/40 border-zinc-800"
                       : "bg-white border-gray-100"
