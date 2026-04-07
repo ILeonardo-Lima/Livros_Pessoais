@@ -481,7 +481,7 @@ export default function App() {
                 // NOVO MODO LISTA (Estilo Apple Books)
                 <div
                   key={livro.id}
-                  className={`flex-1 min-w-0 flex flex-col gap-1 ${
+                  className={`flex items-center gap-4 p-4 border-b ${
                     darkMode
                       ? "bg-zinc-950/40 border-zinc-800"
                       : "bg-white border-gray-100"
@@ -528,16 +528,17 @@ export default function App() {
                             : "bg-indigo-50 text-indigo-600"
                         }`}
                       >
-                        <div
-                          className={`mt-2 ${
-                            livro.status === "Lido"
-                              ? "text-green-500"
-                              : livro.status === "Lendo"
-                                ? "text-amber-500"
-                                : "text-red-500"
-                          }`}
-                        >
-                          <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 shadow-sm">
+                        <div className="mt-2">
+                          {/* Div pai limpa, apenas para dar margem */}
+                          <span
+                            className={`text-[10px] font-bold uppercase tracking-widest ${
+                              livro.status === "Lido"
+                                ? "text-green-500"
+                                : livro.status === "Lendo"
+                                  ? "text-amber-500"
+                                  : "text-red-500"
+                            }`}
+                          >
                             {livro.status}
                           </span>
                         </div>
