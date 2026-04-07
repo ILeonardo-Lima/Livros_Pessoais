@@ -56,7 +56,7 @@ function LivroCard({
   // Estilo dinâmico do card baseado no Modo Escuro
   const cardTheme = darkMode
     ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800"
-    : "bg-white border-gray-300 text-gray-900 hover:bg-gray-300 shadow-gray-300";
+    : "bg-white border-gray-300 text-gray-900 </hover:shadow-ambem-1>00";
 
   return (
     <div
