@@ -489,7 +489,7 @@ export default function App() {
                 >
                   {/* Capa à esquerda */}
                   {/* Onde renderizamos a capa no modo lista */}
-                  <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden flex-shrink-0 shadow-lg">
+                  <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden shrink-0 shadow-lg">
                     {livro.capaUrl ? (
                       <img
                         src={livro.capaUrl} // <-- Verifique se o nome é 'capa' ou 'imageUrl'
