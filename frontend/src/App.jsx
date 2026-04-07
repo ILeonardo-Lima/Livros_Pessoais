@@ -56,7 +56,7 @@ function LivroCard({
   // Estilo dinâmico do card baseado no Modo Escuro
   const cardTheme = darkMode
     ? "bg-zinc-900 border-zinc-800 text-white"
-    : "bg-white border-gray-100 text-gray-900";
+    : "bg-white border-gray-200 text-gray-900";
 
   return (
     <div
@@ -67,7 +67,7 @@ function LivroCard({
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
       <div
-        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-800/50" : "bg-gray-50"}`}
+        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-800/50" : "bg-gray-100"}`}
       >
         {livro.capaUrl || livro.capaurl ? (
           <img
@@ -480,7 +480,6 @@ export default function App() {
                   salvarOrdemNoBanco={salvarOrdemNoBanco}
                 />
               ) : (
-                // É AQUI QUE O MÁGICA ACONTECE:
                 // Você chama o componente novo que criamos e passa os dados para ele
                 <LivroListaItem
                   key={livro.id}
