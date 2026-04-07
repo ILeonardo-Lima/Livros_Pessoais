@@ -6,7 +6,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { Moon, Sun, Plus, Trash2, Edit3, BookOpen, Search } from "lucide-react";
 
 const api = axios.create({
-  // Use exatamente o link que funcionou no seu navegador
   baseURL: "https://livros-pessoais-api.vercel.app",
 });
 const ItemType = "LIVRO";
@@ -145,6 +144,7 @@ function LivroCard({
 
 // CORREÇÃO: Exportação direta para evitar erro de redeclaração de bloco
 export default function App() {
+  const [viewMode, setViewMode] = useState("grid"); // 'grid' ou 'list'
   const [livros, setLivros] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("Todos");
@@ -321,7 +321,26 @@ export default function App() {
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-
+            <div className="flex gap-2">
+              {/* Botão de Alternar View */}
+              <button
+                onClick={() =>
+                  setViewMode(viewMode === "grid" ? "list" : "grid")
+                }
+                className={`p-2.5 rounded-xl border transition-all ${
+                  darkMode
+                    ? "bg-zinc-800 border-zinc-700 text-zinc-400 hover:text-white"
+                    : "bg-white border-gray-200 text-gray-500 hover:text-indigo-600"
+                }`}
+                title={viewMode === "grid" ? "Ver em Lista" : "Ver em Grade"}
+              >
+                {viewMode === "grid" ? (
+                  <List size={20} />
+                ) : (
+                  <LayoutGrid size={20} />
+                )}
+              </button>
+            </div>
             <button
               onClick={handleNovoLivro}
               className="bg-white text-black w-10 h-10 sm:w-auto sm:px-5 sm:py-2.5 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center sm:gap-2 text-sm shadow-md active:scale-95"
@@ -427,20 +446,97 @@ export default function App() {
             />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
-            {filtered.map((livro, index) => (
-              <LivroCard
-                key={livro.id}
-                livro={livro}
-                index={index}
-                moveCard={moveCard}
-                darkMode={darkMode}
-                excluir={handleExcluirLivro}
-                editar={handleEditarLivro}
-                salvarOrdemNoBanco={salvarOrdemNoBanco}
-                livros={livros}
-              />
-            ))}
+          {/* Alteramos a classe da div pai dependendo do modo selecionado */}
+          <div
+            className={
+              viewMode === "grid"
+                ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6"
+                : "flex flex-col gap-3 w-full"
+            }
+          >
+            {filtered.map((livro, index) =>
+              viewMode === "grid" ? (
+                // MODO GRADE (Seu componente atual)
+                <LivroCard
+                  key={livro.id}
+                  livro={livro}
+                  index={index}
+                  moveCard={moveCard}
+                  darkMode={darkMode}
+                  excluir={handleExcluirLivro}
+                  editar={handleEditarLivro}
+                  salvarOrdemNoBanco={salvarOrdemNoBanco}
+                  livros={livros}
+                />
+              ) : (
+                // NOVO MODO LISTA (Estilo Apple Books)
+                <div
+                  key={livro.id}
+                  className={`flex items-center gap-4 p-3 rounded-2xl border transition-all ${
+                    darkMode
+                      ? "bg-zinc-900/40 border-zinc-800"
+                      : "bg-white border-gray-100 shadow-sm"
+                  }`}
+                >
+                  {/* Capa à esquerda */}
+                  <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden shrink-0 shadow-lg">
+                    {livro.capa ? (
+                      <img
+                        src={livro.capa}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-500">
+                        Capa
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info central (Título, Autor, Gênero, Status) */}
+                  <div className="flex-1 min-w-0">
+                    <h3
+                      className={`font-bold text-base truncate ${darkMode ? "text-white" : "text-gray-900"}`}
+                    >
+                      {livro.titulo}
+                    </h3>
+                    <p className="text-sm text-zinc-400 truncate">
+                      {livro.autor}
+                    </p>
+                    <p className="text-xs text-zinc-500 italic mt-0.5">
+                      {livro.genero}
+                    </p>
+
+                    <div className="mt-2">
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md ${
+                          darkMode
+                            ? "bg-indigo-500/10 text-indigo-400"
+                            : "bg-indigo-50 text-indigo-600"
+                        }`}
+                      >
+                        {livro.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Botões de Ação (Editar/Excluir) */}
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => handleEditarLivro(livro)}
+                      className="p-2 text-zinc-500 hover:text-indigo-500"
+                    >
+                      <Edit3 size={18} />
+                    </button>
+                    <button
+                      onClick={() => handleExcluirLivro(livro.id)}
+                      className="p-2 text-zinc-500 hover:text-red-500"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                </div>
+              ),
+            )}
           </div>
         </main>
 
