@@ -62,7 +62,9 @@ function LivroCard({
     <div
       ref={(node) => drag(drop(node))}
       className={`rounded-3xl shadow-xl overflow-hidden transition-all duration-300 cursor-move flex flex-col h-full border ${cardTheme} ${
-        isDragging ? "opacity-50 scale-95" : "hover:shadow-amber-300"
+        isDragging
+          ? "opacity-50 scale-95"
+          : "hover:shadow-[0_0_15px_5px_amber(0,0,0,0.1)]"
       }`}
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
