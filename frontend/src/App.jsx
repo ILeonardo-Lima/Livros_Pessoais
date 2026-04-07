@@ -529,7 +529,7 @@ export default function App() {
                         }`}
                       >
                         <p
-                          className={`font-bold mt-3 ${
+                          className={`font-bold  ${
                             livro.status === "Lido"
                               ? "text-green-500"
                               : livro.status === "Lendo"
