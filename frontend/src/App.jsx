@@ -56,20 +56,18 @@ function LivroCard({
   // Estilo dinâmico do card baseado no Modo Escuro
   const cardTheme = darkMode
     ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800 hover:shadow-amber-200"
-    : "bg-white border-gray-300 text-gray-900  hover:shadow-blue-200";
+    : "bg-white border-gray-300 text-gray-900  hover:shadow-blue-300";
 
   return (
     <div
       ref={(node) => drag(drop(node))}
       className={`rounded-3xl shadow-xl overflow-hidden transition-all duration-300 cursor-move flex flex-col h-full border ${cardTheme} ${
-        isDragging
-          ? "opacity-50 scale-95"
-          : "hover:shadow-[0_0_15px_5px_amber(0,0,0,0.1)]"
+        isDragging ? "opacity-50 scale-95" : "opacity-50 scale-95"
       }`}
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
       <div
-        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-800/50" : "bg-gray-50 hover:bg-gray-300"}`}
+        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-800/50" : "bg-gray-50 "}`}
       >
         {livro.capaUrl || livro.capaurl ? (
           <img
