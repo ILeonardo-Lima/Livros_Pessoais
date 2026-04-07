@@ -528,7 +528,17 @@ export default function App() {
                             : "bg-indigo-50 text-indigo-600"
                         }`}
                       >
-                        {livro.status}
+                        <p
+                          className={`font-bold mt-3 border-t ${darkMode ? "border-zinc-800" : "border-gray-100"} pt-2 ${
+                            livro.status === "Lido"
+                              ? "text-green-500"
+                              : livro.status === "Lendo"
+                                ? "text-amber-500"
+                                : "text-red-500"
+                          }`}
+                        >
+                          {livro.status}
+                        </p>
                       </span>
                     </div>
                   </div>
