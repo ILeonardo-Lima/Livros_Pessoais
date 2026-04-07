@@ -54,9 +54,15 @@ const LivroListaItem = ({
     collect: (monitor) => ({
       isDragging: monitor.isDragging(), // Verdadeiro enquanto o item está no ar
     }),
-    end: () => {
-      // Quando soltar o clique, salva a nova posição no Banco de Dados
-      if (salvarOrdemNoBanco) salvarOrdemNoBanco();
+    end: (item, monitor) => {
+      const didDrop = monitor.didDrop();
+
+      // Se o item foi solto em um lugar válido (didDrop)
+      // E se a função de salvar foi passada via props
+      if (didDrop && salvarOrdemNoBanco) {
+        console.log("Soltou o livro! Enviando nova ordem para o Neon...");
+        salvarOrdemNoBanco();
+      }
     },
   });
 
