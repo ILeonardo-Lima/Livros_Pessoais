@@ -16,10 +16,12 @@ const LivroListaItem = ({
 
   // LOGICA DE "DROP" (RECEBER ALGO EM CIMA)
   const [{ handlerId }, drop] = useDrop({
-    accept: "CARD", // Só aceita itens do tipo "CARD"
+    accept: "CARD",
+    // Só aceita itens do tipo "CARD"
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
     }),
+    drop: () => ({ moved: true }),
     hover: (item, monitor) => {
       if (!ref.current) return;
       const dragIndex = item.index; // Onde o item arrastado estava
