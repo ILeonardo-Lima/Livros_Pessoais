@@ -67,7 +67,7 @@ function LivroCard({
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
       <div
-        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-800/50" : "bg-gray-50"}`}
+        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-800/50" : "bg-gray-50 hover:bg-gray-300"}`}
       >
         {livro.capaUrl || livro.capaurl ? (
           <img
