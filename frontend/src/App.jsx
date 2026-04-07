@@ -481,10 +481,10 @@ export default function App() {
                 // NOVO MODO LISTA (Estilo Apple Books)
                 <div
                   key={livro.id}
-                  className={`flex items-center gap-4 p-3 rounded-2xl border transition-all ${
+                  className={`flex items-center gap-4 p-4 border-b ${
                     darkMode
-                      ? "bg-zinc-900/40 border-zinc-800"
-                      : "bg-white border-gray-100 shadow-sm"
+                      ? "bg-zinc-950/40 border-zinc-800"
+                      : "bg-white border-gray-100"
                   }`}
                 >
                   {/* Capa à esquerda */}
@@ -529,7 +529,7 @@ export default function App() {
                         }`}
                       >
                         <div
-                          className={`mt-2 flex items-center  ${
+                          className={`mt-2 ${
                             livro.status === "Lido"
                               ? "text-green-500"
                               : livro.status === "Lendo"
@@ -537,7 +537,7 @@ export default function App() {
                                 : "text-red-500"
                           }`}
                         >
-                          <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-sm">
+                          <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 shadow-sm">
                             {livro.status}
                           </span>
                         </div>
