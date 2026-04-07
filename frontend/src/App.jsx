@@ -55,14 +55,14 @@ function LivroCard({
 
   // Estilo dinâmico do card baseado no Modo Escuro
   const cardTheme = darkMode
-    ? "bg-zinc-900 border-zinc-800 text-white"
-    : "bg-white border-gray-200 text-gray-900 ";
+    ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800"
+    : "bg-white border-gray-300 text-gray-900 hover:bg-gray-300 shadow-gray-300";
 
   return (
     <div
       ref={(node) => drag(drop(node))}
       className={`rounded-3xl shadow-xl overflow-hidden transition-all duration-300 cursor-move flex flex-col h-full border ${cardTheme} ${
-        isDragging ? "opacity-50 scale-95" : "hover:shadow-2xl"
+        isDragging ? "opacity-50 scale-95" : "hover:shadow-amber-300"
       }`}
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
