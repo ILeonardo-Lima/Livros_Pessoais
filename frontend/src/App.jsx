@@ -488,15 +488,20 @@ export default function App() {
                   }`}
                 >
                   {/* Capa à esquerda */}
-                  <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden shrink-0 shadow-lg">
+                  {/* Onde renderizamos a capa no modo lista */}
+                  <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden flex-shrink-0 shadow-lg">
                     {livro.capa ? (
                       <img
-                        src={livro.capa}
+                        src={livro.capa} // <-- Verifique se o nome é 'capa' ou 'imageUrl'
                         className="w-full h-full object-cover"
+                        alt={livro.titulo}
+                        onError={(e) => {
+                          e.target.src = "https://via.placeholder.com/150";
+                        }} // Fallback caso a URL falhe
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-500">
-                        Capa
+                      <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-500 bg-zinc-900">
+                        Sem Capa
                       </div>
                     )}
                   </div>
