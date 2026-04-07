@@ -151,6 +151,99 @@ function LivroCard({
   );
 }
 
+function LivroListaItem({
+  livro,
+  index,
+  moveCard,
+  editar,
+  excluir,
+  salvarOrdemNoBanco,
+  darkMode,
+  livros,
+}) {
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemType,
+    item: { index },
+    collect: (monitor) => ({ isDragging: monitor.isDragging() }),
+    end: (item, monitor) => {
+      if (monitor.didDrop()) salvarOrdemNoBanco(livros);
+    },
+  });
+
+  const [, drop] = useDrop({
+    accept: ItemType,
+    hover: (draggedItem) => {
+      if (draggedItem.index !== index) {
+        moveCard(draggedItem.index, index);
+        draggedItem.index = index;
+      }
+    },
+  });
+
+  return (
+    <div
+      ref={(node) => drag(drop(node))}
+      className={`flex items-center gap-4 p-4 border-b transition-all ${
+        darkMode ? "bg-zinc-950/40 border-zinc-800" : "bg-white border-gray-100"
+      } ${isDragging ? "opacity-20 scale-[0.98] bg-indigo-500/10" : "opacity-100"}`}
+    >
+      {/* Capa */}
+      <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden shrink-0 shadow-lg cursor-grab active:cursor-grabbing">
+        {livro.capaUrl || livro.capaurl ? (
+          <img
+            src={livro.capaUrl || livro.capaurl}
+            className="w-full h-full object-cover"
+            alt="capa"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-500 bg-zinc-900">
+            Sem Capa
+          </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="flex-1 min-w-0">
+        <h3
+          className={`font-bold text-base truncate ${darkMode ? "text-white" : "text-gray-900"}`}
+        >
+          {livro.titulo}
+        </h3>
+        <p className="text-sm text-zinc-400 truncate">{livro.autor}</p>
+        <div className="mt-2">
+          <span
+            className={`text-[10px] font-bold uppercase tracking-widest ${
+              livro.status === "Lido"
+                ? "text-green-500"
+                : livro.status === "Lendo"
+                  ? "text-amber-500"
+                  : "text-red-500"
+            }`}
+          >
+            {livro.status}
+          </span>
+        </div>
+      </div>
+
+      {/* Ações */}
+      <div className="flex flex-col gap-2">
+        <button
+          onClick={() => editar(livro)}
+          className="p-2 text-zinc-500 hover:text-indigo-500"
+        >
+          <Edit3 size={18} />
+        </button>
+        <button
+          onClick={() => excluir(livro.id)}
+          className="p-2 text-zinc-500 hover:text-red-500"
+        >
+          <Trash2 size={18} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // CORREÇÃO: Exportação direta para evitar erro de redeclaração de bloco
 export default function App() {
   const [viewMode, setViewMode] = useState("grid"); // 'grid' ou 'list'
@@ -465,7 +558,6 @@ export default function App() {
           >
             {filtered.map((livro, index) =>
               viewMode === "grid" ? (
-                // MODO GRADE (Seu componente atual)
                 <LivroCard
                   key={livro.id}
                   livro={livro}
@@ -478,26 +570,24 @@ export default function App() {
                   livros={livros}
                 />
               ) : (
-                // NOVO MODO LISTA (Estilo Apple Books)
                 <div
                   key={livro.id}
-                  className={`flex items-center gap-4 p-4 border-b ${
+                  className={`flex items-center gap-4 p-4 border-b transition-colors ${
                     darkMode
-                      ? "bg-zinc-950/40 border-zinc-800"
-                      : "bg-white border-gray-100"
+                      ? "bg-zinc-950/40 border-zinc-800 hover:bg-zinc-900/60"
+                      : "bg-white border-gray-100 hover:bg-gray-50"
                   }`}
                 >
-                  {/* Capa à esquerda */}
-                  {/* Onde renderizamos a capa no modo lista */}
-                  <div className="w-16 h-24 bg-zinc-800 rounded-lg overflow-hidden shrink-0 shadow-lg">
+                  {/* 1. Capa */}
+                  <div className="w-16 h-24 bg-zinc-800 rounded shadow-md overflow-hidden shrink-0">
                     {livro.capaUrl ? (
                       <img
-                        src={livro.capaUrl} // <-- Verifique se o nome é 'capa' ou 'imageUrl'
+                        src={livro.capaUrl}
                         className="w-full h-full object-cover"
                         alt={livro.titulo}
                         onError={(e) => {
                           e.target.src = "https://via.placeholder.com/150";
-                        }} // Fallback caso a URL falhe
+                        }}
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-500 bg-zinc-900">
@@ -506,57 +596,51 @@ export default function App() {
                     )}
                   </div>
 
-                  {/* Info central (Título, Autor, Gênero, Status) */}
-                  <div className="flex-1 min-w-0 flex flex-col gap-1">
+                  {/* 2. Info Central */}
+                  <div className="flex-1 min-w-0">
                     <h3
-                      className={`font-bold text-base truncate ${darkMode ? "text-white" : "text-gray-900"}`}
+                      className={`font-bold text-lg truncate ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
                     >
                       {livro.titulo}
                     </h3>
-                    <p className="text-sm text-zinc-400 truncate">
+                    <p className="text-sm text-zinc-400 truncate mb-2">
                       {livro.autor}
                     </p>
-                    <p className="text-xs text-zinc-500 italic mt-0.5">
-                      {livro.genero}
-                    </p>
 
-                    <div className="mt-2">
-                      <span
-                        className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md ${
-                          darkMode
-                            ? "bg-indigo-500/10 text-indigo-400"
-                            : "bg-indigo-50 text-indigo-600"
-                        }`}
-                      >
-                        <div className="mt-2">
-                          {/* Div pai limpa, apenas para dar margem */}
-                          <span
-                            className={`text-[10px] font-bold uppercase tracking-widest ${
-                              livro.status === "Lido"
-                                ? "text-green-500"
-                                : livro.status === "Lendo"
-                                  ? "text-amber-500"
-                                  : "text-red-500"
-                            }`}
-                          >
-                            {livro.status}
-                          </span>
-                        </div>
-                      </span>
-                    </div>
+                    <span
+                      className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded ${
+                        livro.status === "Lido"
+                          ? "bg-green-500/10 text-green-500"
+                          : livro.status === "Lendo"
+                            ? "bg-amber-500/10 text-amber-500"
+                            : "bg-red-500/10 text-red-500"
+                      }`}
+                    >
+                      {livro.status}
+                    </span>
                   </div>
 
-                  {/* Botões de Ação (Editar/Excluir) */}
-                  <div className="flex flex-col gap-2">
+                  {/* 3. Ações (Lado Direito) */}
+                  <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleEditarLivro(livro)}
-                      className="p-2 text-zinc-500 hover:text-indigo-500"
+                      className={`p-2 rounded-full transition-colors ${
+                        darkMode
+                          ? "hover:bg-zinc-800 text-zinc-400"
+                          : "hover:bg-gray-100 text-gray-500"
+                      }`}
+                      title="Editar livro"
                     >
                       <Edit3 size={18} />
                     </button>
                     <button
                       onClick={() => handleExcluirLivro(livro.id)}
-                      className="p-2 text-zinc-500 hover:text-red-500"
+                      className={`p-2 rounded-full transition-colors ${
+                        darkMode
+                          ? "hover:bg-red-900/20 text-zinc-400 hover:text-red-500"
+                          : "hover:bg-red-50 text-gray-500 hover:text-red-500"
+                      }`}
+                      title="Excluir livro"
                     >
                       <Trash2 size={18} />
                     </button>
