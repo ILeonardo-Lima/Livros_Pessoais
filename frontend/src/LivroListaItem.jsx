@@ -130,13 +130,13 @@ const LivroListaItem = ({
       <div className="flex items-center gap-2">
         <button
           onClick={() => editar(livro)}
-          className="p-2 bg-indigo-600/20 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-colors"
+          className="p-2 rounded-xl bg-indigo-600/20 text-indigo-400  hover:bg-indigo-600 hover:text-white transition-colors"
         >
           <Edit3 size={18} />
         </button>
         <button
           onClick={() => excluir(livro.id)}
-          className="p-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white transition-colors"
+          className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white transition-colors"
         >
           <Trash2 size={18} />
         </button>
