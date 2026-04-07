@@ -56,6 +56,7 @@ const LivroListaItem = ({
     collect: (monitor) => ({
       isDragging: monitor.isDragging(), // Verdadeiro enquanto o item está no ar
     }),
+
     end: (item, monitor) => {
       const didDrop = monitor.didDrop();
 

@@ -212,8 +212,11 @@ export default function App() {
 
   // CORREÇÃO: Removida a duplicata desta função que causava erro na linha 213/227
   const salvarOrdemNoBanco = async (novaLista) => {
+    // Se novaLista for undefined, usa o 'filtered' (que é a sua lista atual na tela)
+    const listaFinal = novaLista || filtered;
     try {
-      const idsNaOrdem = novaLista.map((livro) => livro.id);
+      // Agora usamos 'listaFinal' que garantimos que existe
+      const idsNaOrdem = listaFinal.map((livro) => livro.id);
       await api.put("/api/livros/reordenar", {
         listaOrdenada: idsNaOrdem,
       });
