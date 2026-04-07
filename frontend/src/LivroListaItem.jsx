@@ -51,19 +51,19 @@ const LivroListaItem = ({
 
   // LOGICA DE "DRAG" (SER ARRASTADO)
   const [{ isDragging }, drag] = useDrag({
-    type: "CARD", // Define o tipo do item
-    item: () => ({ id: livro.id, index }), // Informações que o item leva consigo
+    type: "CARD",
+    item: () => ({ id: livro.id, index }),
     collect: (monitor) => ({
-      isDragging: monitor.isDragging(), // Verdadeiro enquanto o item está no ar
+      isDragging: monitor.isDragging(),
     }),
-
+    // ESTE É O BLOCO CORRETO:
     end: (item, monitor) => {
-      const didDrop = monitor.didDrop();
+      const didDrop = monitor.didDrop(); // Verifica se o "pouso" foi em lugar válido
 
-      // Se o item foi solto em um lugar válido (didDrop)
-      // E se a função de salvar foi passada via props
       if (didDrop && salvarOrdemNoBanco) {
-        console.log("Soltou o livro! Enviando nova ordem para o Neon...");
+        console.log(
+          "Sucesso! O livro foi solto em uma nova posição. Salvando no Neon...",
+        );
         salvarOrdemNoBanco();
       }
     },
