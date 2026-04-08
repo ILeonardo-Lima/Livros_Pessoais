@@ -106,7 +106,7 @@ const LivroListaItem = ({
       {/* 2. Info Central */}
       <div className="flex-1 min-w-0">
         <h3
-          className={`font-bold  text-sm md:text-lg truncate ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
+          className={`text-sm font-bold line-clamp-2 md:line-clamp-none pr-20 md:pr-0${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
         >
           {livro.titulo}
         </h3>
@@ -127,7 +127,7 @@ const LivroListaItem = ({
       </div>
 
       {/* 3. Ações (Editar e Excluir) */}
-      <div className="block ml-auto mt-2 md:inline-block md:ml-0 md:mt-0">
+      <div className="absolute bottom-3 right-3 flex gap-2 md:static md:ml-auto md:flex">
         <button
           onClick={() => editar(livro)}
           className="p-2 rounded-xl bg-indigo-600/20 text-indigo-400  hover:bg-indigo-600 hover:text-white transition-colors"
