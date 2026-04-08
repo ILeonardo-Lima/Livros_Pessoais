@@ -106,7 +106,7 @@ const LivroListaItem = ({
       {/* 2. Info Central */}
       <div className="flex-1 min-w-0">
         <h3
-          className={`text-sm font-bold line-clamp-2 pr-16 md:pr-0${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
+          className={`text-sm font-bold line-clamp-2 pr-16 md:pr-0 ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
         >
           {livro.titulo}
         </h3>
