@@ -320,9 +320,7 @@ export default function App() {
               MINHA ESTANTE
             </h1>
           </div>
-          <h3 className="text-zinc-800">
-            Developed by Leonardo de Oliveira Lima - 2026
-          </h3>
+
           <div className="flex items-center gap-4">
             <button
               onClick={() => setDarkMode(!darkMode)}
@@ -365,7 +363,7 @@ export default function App() {
         </nav>
 
         <main className="w-full px-3 md:px-12 py-6 sm:py-10">
-          <div className="flex flex-wrap justify-center gap-4 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mb-6">
             {/* Botão Todos */}
             <button
               onClick={() => setStatusFilter("Todos")}

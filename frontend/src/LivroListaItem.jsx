@@ -110,11 +110,13 @@ const LivroListaItem = ({
         >
           {livro.titulo}
         </h3>
-        <p className="text-sm text-zinc-400 truncate mb-2">{livro.autor}</p>
+        <p className="text-[12px] md:text-[14px] text-zinc-400 truncate mb-2">
+          {livro.autor}
+        </p>
 
         {/* Badge de Status com cores condicionais */}
         <span
-          className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded ${
+          className={`text-[10px] md:text-[12px] font-bold px-2 py-0.5 rounded-md w-fit mt-auto ${
             livro.status === "Lido"
               ? "bg-green-500/10 text-green-500"
               : livro.status === "Lendo"
