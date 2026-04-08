@@ -110,7 +110,9 @@ const LivroListaItem = ({
         >
           {livro.titulo}
         </h3>
-        <p className="text-sm text-zinc-400 truncate mb-2">{livro.autor}</p>
+        <p className="text-base font-semibold text-zinc-400 truncate mb-2">
+          {livro.autor}
+        </p>
 
         {/* Badge de Status com cores condicionais */}
         <span
