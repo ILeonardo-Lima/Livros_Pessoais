@@ -104,7 +104,7 @@ const LivroListaItem = ({
       </div>
 
       {/* 2. Info Central */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 text-sm">
         <h3
           className={`font-bold text-lg truncate ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
         >
