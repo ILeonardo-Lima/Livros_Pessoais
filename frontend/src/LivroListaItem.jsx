@@ -104,15 +104,13 @@ const LivroListaItem = ({
       </div>
 
       {/* 2. Info Central */}
-      <div className="flex-1 min-w-0 text-sm">
-        <h5
-          className={`font-bold text-xs md:text-lg truncate ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
+      <div className="flex-1 min-w-0">
+        <h3
+          className={`font-bold  text-sm md:text-lg truncate ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
         >
           {livro.titulo}
-        </h5>
-        <p className="text-xs font-semibold text-zinc-400 truncate mb-2">
-          {livro.autor}
-        </p>
+        </h3>
+        <p className="text-sm text-zinc-400 truncate mb-2">{livro.autor}</p>
 
         {/* Badge de Status com cores condicionais */}
         <span
@@ -129,7 +127,7 @@ const LivroListaItem = ({
       </div>
 
       {/* 3. Ações (Editar e Excluir) */}
-      <div className="flex items-center gap-2">
+      <div className="block ml-auto mt-2 md:inline-block md:ml-0 md:mt-0">
         <button
           onClick={() => editar(livro)}
           className="p-2 rounded-xl bg-indigo-600/20 text-indigo-400  hover:bg-indigo-600 hover:text-white transition-colors"
