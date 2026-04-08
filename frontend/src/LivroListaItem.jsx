@@ -80,7 +80,7 @@ const LivroListaItem = ({
     <div
       ref={ref} // Conecta o HTML com a lógica do React DnD
       data-handler-id={handlerId}
-      className={`relative flex items-start md:items-center gap-4 p-4 border-b transition-all ${
+      className={`relative flex-1 min-w-0 items-start md:items-center gap-4 p-4 border-b transition-all ${
         isDragging ? "opacity-0" : "opacity-100" // Esconde o item original enquanto ele é arrastado
       } ${
         darkMode
@@ -106,7 +106,7 @@ const LivroListaItem = ({
       {/* 2. Info Central */}
       <div className="flex-1 min-w-0">
         <h3
-          className={`text-sm font-bold line-clamp-2 w-full pr-10 md:pr-0 ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
+          className={`text-sm font-bold line-clamp-2 w-full pr-2 md:pr-0 ${darkMode ? "text-zinc-100" : "text-zinc-900"}`}
         >
           {livro.titulo}
         </h3>
