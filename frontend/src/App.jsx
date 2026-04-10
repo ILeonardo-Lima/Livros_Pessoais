@@ -67,30 +67,30 @@ function LivroCard({
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
       <div
-        className={`h-72 flex items-center justify-center p-6 ${darkMode ? "bg-zinc-900" : "bg-gray-50"}`}
+        className={`h-30-10-10-10 flex  items-center justify-center p-6 ${darkMode ? "bg-zinc-900" : "bg-gray-50"}`}
       >
         {livro.capaUrl || livro.capaurl ? (
           <img
             src={livro.capaUrl || livro.capaurl}
             alt="capa"
-            className="max-h-full max-w-full object-contain shadow-lg"
+            className=" h-40  object-contain shadow-lg"
           />
         ) : (
           <BookOpen size={64} className="opacity-20" />
         )}
       </div>
 
-      <div className="p-6 flex flex-col grow">
+      <div className="p-2 flex flex-col grow">
         <div className="grow">
-          <h3 className="font-bold text-xl leading-tight mb-1">
+          <h3 className="text-[14px] font-bold text-xl leading-tight mb-1">
             {livro.titulo}
           </h3>
-          <p className="text-indigo-500 dark:text-indigo-400 font-medium mb-3 text-sm">
+          <p className=" text-[12px] text-indigo-500 dark:text-indigo-400  mb-3 text-sm">
             {livro.autor}
           </p>
 
           <div
-            className={`text-xs space-y-1.5 ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+            className={`text-[12px]  space-y-1.5 ${darkMode ? "text-gray-400" : "text-gray-600"}`}
           >
             {/* 1. Gênero (Mantido e formatado) */}
             <p>
@@ -131,7 +131,7 @@ function LivroCard({
 
         {/* Botões do Rodapé perfeitamente alinhados */}
         <div
-          className={`mt-6 flex gap-3 pt-4 border-t ${darkMode ? "border-zinc-800" : "border-gray-100"}`}
+          className={` text-[12px] mt-6 flex gap-3 pt-4 border-t ${darkMode ? "border-zinc-800" : "border-gray-100"}`}
         >
           <button
             onClick={() => editar(livro)}
@@ -507,7 +507,7 @@ export default function App() {
 
               <form onSubmit={salvarLivro} className="space-y-3 sm:space-y-4">
                 <div
-                  className={`text-lg sm:text-2xl font-bold mb-4 sm:mb-6 ${darkMode ? "text-white" : "text-gray-900"}`}
+                  className={`text-lg sm:text-2xl  mb-4 sm:mb-6 ${darkMode ? "text-white" : "text-gray-900"}`}
                 >
                   <div className="space-y-1">
                     <label
@@ -643,11 +643,11 @@ export default function App() {
                   />
                 </div>
 
-                <div className="flex gap-4 pt-6">
+                <div className=" flex gap-4 pt-6">
                   <button
                     type="button"
                     onClick={() => setModalOpen(false)}
-                    className="flex-1 py-4 rounded-2xl font-bold bg-rose-800 text-white hover:bg-rose-700 transition"
+                    className=" flex-1 py-4 rounded-2xl font-bold bg-rose-800 text-white hover:bg-rose-700 transition"
                   >
                     Cancelar
                   </button>

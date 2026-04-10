@@ -56,7 +56,6 @@ const LivroListaItem = ({
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    // ESTE É O BLOCO CORRETO:
     end: (item, monitor) => {
       const didDrop = monitor.didDrop(); // Verifica se o "pouso" foi em lugar válido
 
