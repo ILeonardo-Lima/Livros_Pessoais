@@ -55,8 +55,8 @@ function LivroCard({
 
   // Estilo dinâmico do card baseado no Modo Escuro
   const cardTheme = darkMode
-    ? "bg-zinc-900 border-zinc-800 text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_8px_rgba(245,158,11,0.4)]"
-    : "bg-white border-gray-300 text-gray-900 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_8px_rgba(59,130,246,0.4)]";
+    ? "bg-zinc-900 border-zinc-800 text-white transition-all duration-300  hover:shadow-[0_0_30px_8px_rgba(245,158,11,0.4)]"
+    : "bg-gray border-gray-300 text-gray-900 transition-all duration-300  hover:shadow-[0_0_30px_8px_rgba(59,130,246,0.4)]";
 
   return (
     <div
@@ -67,20 +67,22 @@ function LivroCard({
     >
       {/* Área da Capa com Altura Reduzida (h-72) */}
       <div
-        className={`h-30-10-10-10 flex  items-center justify-center p-6 ${darkMode ? "bg-zinc-900" : "bg-gray-50"}`}
+        className={`h-30-10-10-10 flex  items-center justify-center p-6 ${darkMode ? "bg-zinc-900" : "bg-gray-200"}`}
       >
         {livro.capaUrl || livro.capaurl ? (
           <img
             src={livro.capaUrl || livro.capaurl}
             alt="capa"
-            className=" h-40  object-contain shadow-lg"
+            className=" h-50  object-contain shadow-lg"
           />
         ) : (
           <BookOpen size={64} className="opacity-20" />
         )}
       </div>
 
-      <div className="p-2 flex flex-col grow">
+      <div
+        className={`p-2 flex flex-col grow ${darkMode ? "bg-zinc-900" : "bg-gray-200"}`}
+      >
         <div className="grow">
           <h3 className="text-[14px] font-bold text-xl leading-tight mb-1">
             {livro.titulo}
@@ -338,10 +340,10 @@ export default function App() {
                 onClick={() =>
                   setViewMode(viewMode === "grid" ? "list" : "grid")
                 }
-                className={`p-2.5 rounded-xl border transition-all ${
+                className={`p-2.5 rounded-xl transition-all ${
                   darkMode
-                    ? "bg-zinc-800 border-zinc-700 text-zinc-400 hover:text-white"
-                    : "bg-white border-gray-200 text-gray-500 hover:text-indigo-600"
+                    ? "bg-white text-black hover:text-white hover:bg-indigo-500"
+                    : "bg-white text-gray-500 hover:text-white hover:bg-indigo-500"
                 }`}
                 title={viewMode === "grid" ? "Ver em Lista" : "Ver em Grade"}
               >
@@ -354,7 +356,7 @@ export default function App() {
             </div>
             <button
               onClick={handleNovoLivro}
-              className="bg-white text-black w-10 h-10 sm:w-auto sm:px-5 sm:py-2.5 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center sm:gap-2 text-sm shadow-md active:scale-95"
+              className="  bg-white text-black w-10 h-10 sm:w-auto sm:px-5 sm:py-2.5 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center sm:gap-2 text-sm shadow-md active:scale-95"
             >
               <Plus size={20} />{" "}
               <span className="hidden sm:inline">Novo Livro</span>
